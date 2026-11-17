@@ -12,7 +12,6 @@ certificados = Blueprint(
 )
 
 @certificados.route("/validadorqr-sep")
-@certificados.route("/sep")
 def inicio():
 
     D3 = request.args.get("D3", "").strip()
