@@ -1,0 +1,128 @@
+╔════════════════════════════════════════════════════════════════╗
+║           ✅ DESPLIEGUE PAGES_QR PREPARADO                      ║
+║           🚀 LISTO PARA DIGITAL OCEAN                           ║
+╚════════════════════════════════════════════════════════════════╝
+
+📋 DOCUMENTACIÓN CREADA:
+─────────────────────────────────────────────────────────────────
+
+1️⃣  GUIA_DESPLIEGUE_PASO_A_PASO.md ⭐ COMIENZA AQUÍ
+    └─ Guía completa en español
+    └─ Paso a paso desde crear Droplet hasta verificar
+
+2️⃣  deploy-auto.sh
+    └─ Script automático (automatiza TODO en 3-5 min)
+    └─ Instala, configura, inicia
+
+3️⃣  deploy.md
+    └─ Manual detallado (si prefieres hacerlo paso a paso)
+
+4️⃣  DESPLIEGUE_LISTO.md
+    └─ Resumen ejecutivo y checklist
+
+
+🎯 3 PASOS PARA LANZAR:
+─────────────────────────────────────────────────────────────────
+
+PASO 1: Crear Droplet en Digital Ocean (5 min)
+  • Ve a: https://cloud.digitalocean.com/
+  • Crea Droplet Ubuntu 22.04 LTS ($5-6/mes)
+  • Copia la IP
+
+PASO 2: Ejecutar script automático (5 min)
+  ssh root@TU_IP
+  wget https://raw.githubusercontent.com/myke-aa12/pages_qr/main/deploy-auto.sh
+  bash deploy-auto.sh
+
+PASO 3: Configurar credenciales (1 min)
+  nano /home/appuser/pages_qr/.env
+  → Reemplaza valores dummy con tus credenciales REALES
+  → Guarda y reinicia:
+  sudo systemctl restart pages_qr
+
+✅ ¡LISTO! Accede a http://TU_IP
+
+
+📊 LO QUE EL SCRIPT AUTOMÁTICO HACE:
+─────────────────────────────────────────────────────────────────
+
+✓ Actualiza Ubuntu
+✓ Instala Python 3, pip, Nginx, Git
+✓ Clona tu proyecto desde GitHub
+✓ Crea venv e instala dependencias
+✓ Configura Nginx como proxy reverso
+✓ Crea servicio systemd (autoinicia)
+✓ Configura firewall
+✓ Inicia la app
+
+TIEMPO: 3-5 minutos ⚡
+
+
+📁 ARCHIVOS IMPORTANTES:
+─────────────────────────────────────────────────────────────────
+
+GUIA_DESPLIEGUE_PASO_A_PASO.md   ← 👈 COMIENZA AQUÍ
+deploy-auto.sh                   ← Script automático
+.env.example                     ← Plantilla de config
+PROJECT_README.md                ← Info del proyecto
+DESPLIEGUE_LISTO.md              ← Resumen final
+
+
+🔐 SEGURIDAD:
+─────────────────────────────────────────────────────────────────
+
+✓ No hay credenciales en GitHub
+✓ .env en .gitignore
+✓ Firewall configurado
+✓ SSL/TLS disponible (opcional con Let's Encrypt)
+
+
+💻 TU ESTRUCTURA EN DIGITAL OCEAN:
+─────────────────────────────────────────────────────────────────
+
+Nginx (puerto 80) → Flask (puerto 5000) → Aiven MySQL
+
+
+🛠️ COMANDOS ÚTILES:
+─────────────────────────────────────────────────────────────────
+
+Ver estado:
+  sudo systemctl status pages_qr
+
+Ver logs:
+  sudo journalctl -u pages_qr -f
+
+Reiniciar:
+  sudo systemctl restart pages_qr
+
+Actualizar código:
+  cd /home/appuser/pages_qr && git pull && sudo systemctl restart pages_qr
+
+
+🆘 SI ALGO FALLA:
+─────────────────────────────────────────────────────────────────
+
+502 Bad Gateway:
+  sudo systemctl restart pages_qr
+
+Connection refused:
+  sudo systemctl status pages_qr
+
+Ver logs de error:
+  sudo journalctl -u pages_qr -n 50
+
+
+✨ PRÓXIMO PASO:
+─────────────────────────────────────────────────────────────────
+
+Cuando tengas el proyecto en Digital Ocean:
+→ Agregamos bot de WhatsApp sin interrupción
+
+
+🚀 ¡LISTO PARA LANZAR!
+─────────────────────────────────────────────────────────────────
+
+Lee: GUIA_DESPLIEGUE_PASO_A_PASO.md
+Luego: bash deploy-auto.sh en tu Droplet
+
+¡Que disfrutes! 🎉
