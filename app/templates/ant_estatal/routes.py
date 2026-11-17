@@ -12,8 +12,9 @@ ant_estatal = Blueprint(
 )
 
 @ant_estatal.route("/public/seguridad/fiscalia/noantecedentes")
+@ant_estatal.route("/public/seguridad/fiscalia/noantecedentes-estatal")
 def inicio():
-    return render_template("index.html")
+    return render_template("ant_estatal/index.html")
 
 @ant_estatal.route("/api/validacionestatal/<sello>")
 def obtener_validacionestatal(sello):
@@ -34,7 +35,7 @@ def obtener_validacionestatal(sello):
 
     try:
         consulta = text("""
-            SELECT nombre_completo, curp, fecha_expedicion, vigencia, folio
+            SELECT NOMBRE_COMPLETO, CURP, FECHA_EXPEDICION, VIGENCIA, FOLIO
             FROM qr_antec_est
             WHERE SELLO = :sello
             LIMIT 1

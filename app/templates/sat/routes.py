@@ -20,7 +20,7 @@ def inicio():
     # Validar parametro D3
     if not D3 or "_" not in D3:
         return render_template(
-            "index.html",
+            "sat/index.html",
             datos=datos,
             encontrado=False
         ), 400
@@ -37,7 +37,7 @@ def inicio():
 
     except ValueError:
         return render_template(
-            "index.html",
+            "sat/index.html",
             datos=datos,
             encontrado=False
         ), 400
@@ -64,7 +64,7 @@ def inicio():
 
         if row is None:
             return render_template(
-                "index.html",
+                "sat/index.html",
                 datos=datos,
                 encontrado=False
             ), 404
@@ -75,7 +75,7 @@ def inicio():
         }
 
         return render_template(
-            "index.html",
+            "sat/index.html",
             datos=datos,
             encontrado=True
         )
@@ -85,7 +85,7 @@ def inicio():
         logging.exception("Error consultando qrsat en MySQL")
 
         return render_template(
-            "index.html",
+            "sat/index.html",
             datos=datos,
             encontrado=False
         ), 500

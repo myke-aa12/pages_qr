@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 import logging
@@ -11,7 +11,8 @@ certificados = Blueprint(
     template_folder="."
 )
 
-@certificados.route("/")
+@certificados.route("/validadorqr-sep")
+@certificados.route("/sep")
 def inicio():
 
     D3 = request.args.get("D3", "").strip()
@@ -24,7 +25,7 @@ def inicio():
     # Validar parametro D3
     if not D3 or "_" not in D3:
         return render_template(
-            "index.html",
+            "certificados/index.html",
             datos=datos,
             encontrado=False
         ), 400
@@ -41,7 +42,7 @@ def inicio():
 
     except ValueError:
         return render_template(
-            "index.html",
+            "certificados/index.html",
             datos=datos,
             encontrado=False
         ), 400
@@ -52,7 +53,7 @@ def inicio():
 
         consulta = text("""
             SELECT RFC, SELLO
-            FROM qr_antec_est
+            FROM qr_certificados
             WHERE ID = :id
             AND RFC = :rfc
             LIMIT 1
@@ -68,7 +69,7 @@ def inicio():
 
         if row is None:
             return render_template(
-                "index.html",
+                "certificados/index.html",
                 datos=datos,
                 encontrado=False
             ), 404
@@ -79,20 +80,70 @@ def inicio():
         }
 
         return render_template(
-            "index.html",
+            "certificados/index.html",
             datos=datos,
             encontrado=True
         )
 
     except SQLAlchemyError:
 
-        logging.exception("Error consultando qr_antec_est en MySQL")
+        logging.exception("Error consultando qr_certificados en MySQL")
 
         return render_template(
-            "index.html",
+            "certificados/index.html",
             datos=datos,
             encontrado=False
         ), 500
+
+    finally:
+        db.close()
+
+@certificados.route("/api/validacion/<sello>")
+def obtener_validacion(sello):
+    """
+    Obtiene los datos de validación usando el sello como llave
+    
+    Args:
+        sello: Sello único de la constancia
+    
+    Returns:
+        JSON con datos de la validación o error 404
+    """
+    
+    if not sello or sello.strip() == "":
+        return jsonify({'error': 'Sello no válido'}), 400
+
+    db = get_connection()
+
+    try:
+        consulta = text("""
+            SELECT nombre_completo, curp, fecha_expedicion, vigencia, folio
+            FROM qr_certificados
+            WHERE SELLO = :sello
+            LIMIT 1
+        """)
+
+        row = db.execute(
+            consulta,
+            {"sello": sello}
+        ).mappings().first()
+
+        if row is None:
+            return jsonify({'error': 'Constancia no encontrada'}), 404
+
+        return jsonify({
+            'success': True,
+            'sello': sello,
+            'nombre_completo': row['NOMBRE_COMPLETO'],
+            'curp': row['CURP'],
+            'fecha_expedicion': row['FECHA_EXPEDICION'],
+            'vigencia': row['VIGENCIA'],
+            'folio': row['FOLIO']
+        }), 200
+
+    except SQLAlchemyError as e:
+        logging.exception("Error consultando qr_certificados en MySQL")
+        return jsonify({'error': 'Error al consultar la base de datos'}), 500
 
     finally:
         db.close()

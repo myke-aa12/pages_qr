@@ -11,9 +11,9 @@ ant_federal = Blueprint(
     template_folder="."
 )
 
-@ant_federal.route("/public/seguridad/fiscalia/noantecedentes")
+@ant_federal.route("/public/seguridad/fiscalia/noantecedentes-federal")
 def inicio():
-    return render_template("index.html")
+    return render_template("ant_federal/index.html")
 
 @ant_federal.route("/api/validacionfederal/<sello>")
 def obtener_validacionfederal(sello):

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, abort
+from flask import Flask, request, render_template, abort, g
 from app.database import init_database
 from config import Config
 
@@ -48,11 +48,26 @@ def create_app():
         }
     }
 
+    @app.before_request
+    def detectar_dominio():
+        """Detecta el dominio y lo almacena en g para usar en rutas y templates"""
+        dominio = request.host.split(":")[0].lower()
+        sitio = SITIOS.get(dominio)
+        
+        if sitio is None:
+            # Dominio desconocido - por defecto SAT
+            g.dominio = dominio
+            g.sitio_nombre = "sat"
+            g.sitio_plantilla = "sat/index.html"
+        else:
+            g.dominio = dominio
+            g.sitio_nombre = sitio["nombre"]
+            g.sitio_plantilla = sitio["plantilla"]
+
     @app.route("/")
     def inicio():
-
+        """Ruta raíz que enruta según el dominio accedido"""
         dominio = request.host.split(":")[0].lower()
-
         sitio = SITIOS.get(dominio)
 
         if sitio is None:
