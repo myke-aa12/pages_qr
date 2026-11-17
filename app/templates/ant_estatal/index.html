@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Constancia Estatal de Antecedentes Penales</title>
+    
+    <!-- GOB.MX Framework CSS -->
+    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
+    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
+    
+    <!-- Fuentes GOB.MX -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #611232;
+            --color-secondary: #9d2449;
+            --color-tertiary: #a57f2c;
+            --color-light: #DDC9A3;
+            --color-gray: #98989A;
+            --color-dark: #13322e;
+            --color-white: #FFFFFF;
+            --color-bronze: #BC955C;
+            --text-dark: #545454;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: 'Noto Sans', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-dark);
+            line-height: 1.6;
+            height: auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Main Container */
+        main.page {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        main.page > .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Title Section */
+        .title-section {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--color-primary);
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .title-section h1 {
+            font-size: 32px;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--color-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Certificate Info Card */
+        .certificate-card {
+            background: var(--color-white);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .card-header {
+            background: var(--color-primary);
+            color: white;
+            padding: 20px 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--color-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Status Section */
+        .status-section {
+            background: #f0f8f3;
+            border-left: 4px solid var(--color-dark);
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--color-dark);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .status-icon.success {
+            background: var(--color-dark);
+        }
+
+        .status-icon.error {
+            background: #d32f2f;
+        }
+
+        .status-text h3 {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .status-text p {
+            font-size: 13px;
+            color: var(--color-gray);
+        }
+
+        /* Legal Info */
+        .legal-section {
+            background: var(--color-white);
+            border-radius: 4px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: var(--text-dark);
+            line-height: 1.8;
+            border-left: 4px solid var(--color-tertiary);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .legal-section h3 {
+            font-size: 18px;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .legal-section p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* Botones */
+        .btn-primary {
+            background: var(--color-primary) !important;
+            border-color: var(--color-primary) !important;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-secondary) !important;
+            border-color: var(--color-secondary) !important;
+        }
+
+        .btn-secondary {
+            background: var(--color-gray) !important;
+            border-color: var(--color-gray) !important;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: white;
+            padding: 40px 20px;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        .footer-section h4 {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--color-light);
+            padding-bottom: 10px;
+            color: var(--color-light);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-light);
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #e0e0e0;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .title-section h1 {
+                font-size: 24px;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .status-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            main.page {
+                margin: 20px auto;
+            }
+
+            .title-section {
+                padding: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            footer {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .certificate-card, .legal-section, .title-section {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Error State */
+        .error-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            flex: 1;
+            background: #f5f5f5;
+        }
+
+        .error-container.active {
+            display: flex;
+        }
+
+        .error-icon {
+            width: 150px;
+            height: 150px;
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+        }
+
+        .error-message {
+            text-align: center;
+            font-size: 20px;
+            color: #707070;
+            font-weight: 600;
+            max-width: 500px;
+            font-family: 'Noto Sans', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Error Container -->
+    <div class="error-container" id="errorContainer">
+        <div class="error-icon">✗</div>
+        <div class="error-message" id="errorMessage">Constancía no válida. No se encontró en la base de datos</div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="page" id="mainContent">
+        <div class="container">
+
+        <!-- Title Section -->
+        <section class="title-section">
+            <h1>Información de la Constancia de No Antecedentes Penales</h1>
+        </section>
+         <!-- Legal Information -->
+        <section class="legal-section">
+            <p>
+                Este documento es expedido por el gobierno de México, con fundamento en el artículo 10 de 
+                la Ley de Ciudadanía Digital del gobierno de México, se establece que la veracidad 
+                y legalidad de la información, datos y/o documentos que se entregaron es 
+                responsabilidad de la persona que los integró a su expediente electrónico.
+            </p>
+            <p>
+                El solicitante declarando que la información y documentación que presentó para 
+                esta Plataforma es legítima y verídica, por lo que en caso de existir falsedad 
+                en ella, tiene pleno conocimiento que se aplicarán las sanciones administrativas 
+                y penas establecidas en los ordenamientos respectivos para quienes se conducen 
+                con falsedad.
+            </p>
+        </section>
+
+        <!-- Certificate Card -->
+        <article class="certificate-card">
+            <div class="card-header">
+                Datos del Solicitante
+            </div>
+            <div class="card-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Nombre del Solicitante</div>
+                        <div class="info-value" id="nombreSolicitante">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Fecha de Expedición</div>
+                        <div class="info-value" id="fechaExpedicion">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Folio de la Constancia</div>
+                        <div class="info-value" id="folioConstancia">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Vigencia</div>
+                        <div class="info-value" id="vigencia">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CURP</div>
+                        <div class="info-value" id="curp">—</div>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div class="status-section">
+                    <div class="status-icon success">✓</div>
+                    <div class="status-text">
+                        <h3>Estatus: Validado</h3>
+                        <p>La constancia ha sido verificada correctamente.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        </div>
+    </main>
+
+    <script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js"></script>
+
+    <script>
+        // Script para cargar datos desde el API usando el sello como parámetro
+        $gmx(document).ready(function() {
+            // Obtener parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const sello = urlParams.get('sello');
+            
+            // Si no hay sello, mostrar error o pedirlo
+            if (!sello) {
+                mostrarError('Constancía no válida. No se encontró en la base de datos');
+                return;
+            }
+            
+            // Realizar llamada al API para obtener los datos
+            fetch(`/api/validacionestatal/${sello}`)
+                .then(response => {
+                    if (response.status === 404) {
+                        mostrarError('Constancía no válida. No se encontró en la base de datos');
+                        return null;
+                    }
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(datos => {
+                    if (datos) {
+                        llenarDatos(datos);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    mostrarError('Error al consultar la validación. Intente de nuevo más tarde.');
+                });
+        });
+
+        function llenarDatos(datos) {
+            // Llenar los campos con los datos del API
+            document.getElementById('nombreSolicitante').textContent = datos.nombre_completo || '—';
+            document.getElementById('fechaExpedicion').textContent = datos.fecha_expedicion || '—';
+            document.getElementById('folioConstancia').textContent = datos.folio || '—';
+            document.getElementById('vigencia').textContent = datos.vigencia || '—';
+            document.getElementById('curp').textContent = datos.curp || '—';
+            
+            // Mostrar check de validación
+            const statusIcon = document.querySelector('.status-icon');
+            const statusText = document.querySelector('.status-text h3');
+            const statusDesc = document.querySelector('.status-text p');
+            
+            if (statusIcon) statusIcon.classList.add('success');
+            if (statusText) statusText.textContent = 'Estatus: Validado';
+            if (statusDesc) statusDesc.textContent = 'La constancia ha sido verificada correctamente.';
+        }
+
+        function mostrarError(mensaje) {
+            // Mostrar contenedor de error y ocultar contenido principal (pero mantener footer visible)
+            const errorContainer = document.getElementById('errorContainer');
+            const mainContent = document.getElementById('mainContent');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (errorContainer) {
+                errorContainer.classList.add('active');
+            }
+            if (mainContent) {
+                mainContent.style.display = 'none';
+            }
+            if (errorMessage) {
+                errorMessage.textContent = mensaje;
+            }
+        }
+
+        // Función para imprimir
+        function imprimirConstancia() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

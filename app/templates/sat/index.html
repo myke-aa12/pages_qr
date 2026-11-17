@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador QR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======= FONDO GENERAL ======= */
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to bottom, #f9f8f8 0%, #eee9e2 100%);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #000;
+    }
+
+    /* ======= CONTENEDOR PRINCIPAL ======= */
+    .container {
+      width: 100%;
+      max-width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+      margin: 0px auto;
+    }
+
+    /* ======= LOGO SUPERIOR ======= */
+    .logo-sat {
+      display: block;
+      margin: 0 auto 50px auto;
+      width: 320px; /* tamaño del logo */
+      height: auto;
+      border-radius: 4px;
+    }
+
+    /* ======= CUADRO INFORMATIVO ======= */
+    /* ======= CONTANCIA DE SITUACION FISCAL QUE EMITIÓ... ======= */
+    .panel-constancia {
+      display: inline-block; /* se adapta al contenido */
+      background-color: #fdfaf5;
+      border-radius: 10px;
+      box-shadow: 0 3px 3px #b38e5de3;
+      overflow: hidden;
+      border: 1px solid #b38e5d;
+      margin-bottom: 25px;
+    }
+
+    .panel-header {
+      background-color: #c0a37a;
+      color: #000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      padding: 10px 16px;
+      display: flex;
+      align-items: flex-start;
+      border-radius: 8px;
+      margin: 20px;
+      font-size: 16px;
+    }
+
+    .info-icon {
+      background-color: #007bff; /* azul */
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      font-style: normal;
+      font-weight: bold;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .error-icon {
+      background-color: #dc3545; /* rojo */
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      font-style: normal;
+      font-weight: bold;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ======= PANEL DE DATOS GENERALES ======= */
+    /* ======= cuadro que contiene los datos generales ======= */
+    .panel-datos {
+      background-color: #faf5ed;
+      border: 1px solid #b38e5d;
+      border-radius: 10px;
+      box-shadow: 0 3px 3px #b38e5de3;
+      overflow: hidden;
+    }
+
+    .titulo-datos {
+      background: linear-gradient(to bottom, #ebe6dd 0%, #b38e5d 100%);
+      color: #3c3c3b;
+      font-weight: 400;
+      padding: 8px 12px;
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid #b38e5d;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+    }
+
+    .panel-body {
+      padding: 16px 20px;
+      font-size: 16px; /* una medida más grande que antes */
+      line-height: 1;
+      background: #fdfaf5;
+      border-radius: 0 0 10px 10px;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 25px;
+    }
+
+    /* ======= TABLA ======= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    td.label {
+      white-space: nowrap;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      color: #3c3c3b;
+      width: 160px;
+      text-align: right; /* alineación a la derecha */
+      font-size: 16px; /* una medida más grande */
+      padding-right: 10px;
+    }
+
+    td:not(.label) {
+      font-size: 15px; /* una medida más grande */
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Contenido que se rompe aunque sea en medio de palabra */
+    td.valor {
+      word-break: break-all; /* rompe palabra si es necesario */
+      overflow-wrap: break-word; /* soporte adicional */
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300; /* Montserrat Light */
+      font-size: 16px;
+    }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        margin: 0px auto;
+      }
+      .panel-body {
+        font-size: 14px;
+        padding: 12px 8px;
+      }
+      td.label {
+        font-size: 14px;
+        width: 120px;
+        font-weight: 500; /* Montserrat Light también en móviles */
+        padding-right: 10px;
+        padding-left: 40px;
+      }
+      .logo-sat {
+        width: 320px;
+      }
+       td.valor {
+        font-size: 14px;
+        font-weight: 300; /* Montserrat Light también en móviles */
+        word-break: break-all;
+        line-height: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .panel-header {
+        flex-wrap: nowrap; /* 🔒 evita el salto de línea */
+        font-size: 15px;
+        text-align: left;
+      }
+
+      .panel-header i {
+        margin-right: 8px;
+        margin-bottom: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- ======= LOGO ENCABEZADO ======= -->
+    <img src="{{ url_for('static', filename='sat/img/sati.jpg') }}" alt="SAT" class="logo-sat" >
+
+    <!-- ======= CUADRO INFORMATIVO ======= -->
+    <div class="panel-constancia">
+      <div class="panel-header">
+        {% if encontrado %}
+          <i class="info-icon">i</i> La Constancia de Situación Fiscal que verificó fue emitida por el Servicio de Administración Tributaria
+        {% else %}
+          <i class="error-icon">X</i> La información no coincide con los registros electrónicos del Servicio de Administración Tributaria
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ======= PANEL DATOS GENERALES ======= -->
+    {% if encontrado %}
+    <div class="panel-datos">
+      <div class="titulo-datos">Datos Generales</div>
+      <div class="panel-body">
+        <table>
+          <tr>
+            <td class="label">RFC:</td>
+            <td class="valor">{{ datos.rfc }}</td>
+          </tr>
+          <tr>
+            <td class="label">Cadena Original:</td>
+            <td class="valor">{{ datos.cadena_original }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
